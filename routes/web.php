@@ -9,7 +9,11 @@ Route::get('/', function () {
 //untuk ke page saja
 Route::get('/home', function () {
     return view('home');
-});
+})->name('home');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 //passing parameter ke page lain
 Route::get('/home/{name}', function ($name) {

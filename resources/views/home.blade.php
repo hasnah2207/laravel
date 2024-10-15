@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ config('app.name') }}</title>
-</head>
-<body>
+@extends('layouts.main')
 
-    <h1>Hello,  {{ $name ?? "team"}}.</h1>
-</body>
-</html>
+@section('title', 'Home')
+
+@section('content')
+
+    @php($_name=$name ?? "team")
+    {{--
+    1. if name equal to abu , i want to display . You are banned
+    --}}
+
+   @if($_name == "abu")
+      <p>You are banned.</p>
+   @elseif($_name == "hasnah")
+      <p>You are beautiful.</p>
+   @else
+       <h1>Hello,  {{ $_name }}.</h1>
+   @endif
+   <button type="button" class="btn btn-danger">Klik Sini</button>
+@endsection
