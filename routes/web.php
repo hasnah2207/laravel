@@ -11,9 +11,11 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
+//page about
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
 
 //passing parameter ke page lain
 Route::get('/home/{name}', function ($name) {
@@ -70,4 +72,5 @@ Route::name('job')->prefix('job')->group(function () {
     })->name('.description');
 });
 
+require __DIR__.'/feed/web.php';
 
