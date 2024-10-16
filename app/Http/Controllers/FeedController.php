@@ -10,8 +10,8 @@ class FeedController extends Controller
 {
     public function index()
     {
-        $feeds=Feed::all();
-        return view('pages.feed.index');
+        $feeds=Feed::paginate(5);
+        return view('pages.feed.index',compact('feeds'));
     }
 
     public function create()
@@ -32,6 +32,23 @@ class FeedController extends Controller
         // $feed->update($this->validateRequest($request));
         // return redirect()->route('feeds')->with('success','Feed updated successfully');
     }
+
+    public function store(Request $request)
+    {
+        $validated_request=$request->validate([
+            'title' =>'required | string | max:100 | min:3',
+            'description' =>'required | string | max:300',
+        ]);
+
+        $validated_request['user_id'] = 1;
+
+        Feed::create($validated_request);
+       // return redirect()->route('feeds');
+        return redirect()->route('feeds')->with('success','Feed created successfully');
+        // $feed->update($this->validateRequest($request));
+        // return redirect()->route('feeds')->with('success','Feed created successfully');
+    }
+
 
     public function show( Feed $feed)
     {

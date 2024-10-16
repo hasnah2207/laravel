@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +25,10 @@ Route::get('/home/{name}', function ($name) {
 
 //auth.signin - folder auth, dlm nya ada file signin
 Route::get('/auth/signup', function () {
+    return view('auth.signup');
+});
+
+Route::get('/auth/signin', function () {
     return view('auth.signin');
 });
 
@@ -74,3 +79,6 @@ Route::name('job')->prefix('job')->group(function () {
 
 require __DIR__.'/feed/web.php';
 
+//AUTH -SIGNUP dan SIGNIN
+Route::get('/auth/signup', [AuthController::class, 'signUp'])->name('signup');
+Route::get('/auth/signin', [AuthController::class, 'signIn'])->name('signin');
