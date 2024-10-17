@@ -23,15 +23,6 @@ Route::get('/home/{name}', function ($name) {
     return view('home', ['name' => $name]);
 });
 
-//auth.signin - folder auth, dlm nya ada file signin
-Route::get('/auth/signup', function () {
-    return view('auth.signup');
-});
-
-Route::get('/auth/signin', function () {
-    return view('auth.signin');
-});
-
 //Route param
 Route::get('/user/{name}/{age}', function ($name,$age) {
     return 'User: '.$name .' Umur: '.$age;
@@ -80,5 +71,11 @@ Route::name('job')->prefix('job')->group(function () {
 require __DIR__.'/feed/web.php';
 
 //AUTH -SIGNUP dan SIGNIN
-Route::get('/auth/signup', [AuthController::class, 'signUp'])->name('signup');
-Route::get('/auth/signin', [AuthController::class, 'signIn'])->name('signin');
+Route::middleware('guest')->group( function(){
+Route::get('/auth/signup', [AuthController::class, 'signUp'])->name('auth.signup');
+Route::get('/auth/signin', [AuthController::class, 'signIn'])->name('auth.signin');
+Route::post('/auth/store',[AuthController::class,'storeUser'])->name('auth.store');
+Route::post('/auth/authenticate',[AuthController::class,'authenticate'])->name('auth.authenticate');
+});
+
+Route::get('/auth/logout',[AuthController::class,'logout'])->name('auth.logout');

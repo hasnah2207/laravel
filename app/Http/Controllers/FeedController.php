@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Feed;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class FeedController extends Controller
@@ -40,7 +42,8 @@ class FeedController extends Controller
             'description' =>'required | string | max:300',
         ]);
 
-        $validated_request['user_id'] = 1;
+        $user = Auth::user();
+        $validated_request['user_id'] = $user->id;
 
         Feed::create($validated_request);
        // return redirect()->route('feeds');
@@ -52,8 +55,8 @@ class FeedController extends Controller
 
     public function show( Feed $feed)
     {
-        //dd($feed);
-        Log::debug("Show Feed",['feed' => $feed ]);
+
+        Gate::authorize('update',$feed);
 
         return view('pages.feed.show',compact('feed'));
     }
